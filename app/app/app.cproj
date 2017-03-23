@@ -137,9 +137,6 @@
     <Compile Include="HAL.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="HAL_i.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>

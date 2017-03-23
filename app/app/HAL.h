@@ -39,7 +39,6 @@ void set_pin_direction(uint8_t direction,Port p,uint8_t pinNo);
 
 ///////////////////////////////////set_port_output///////////////////////////////////
 /*
-/*
 * PURPOSE : To set the port as high or low
 *
 * direction -> should be either HIGH, LOW, 0, or 1
