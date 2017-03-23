@@ -1,6 +1,6 @@
 #ifndef HAL_H_
 #define HAL_H_
-
+ 
 #define A 0x39
 #define B 0x36
 #define C 0x33
@@ -16,97 +16,88 @@ typedef struct portStruct* Port;
 
 ///////////////////////////////////set_port_direction///////////////////////////////////
 /*
-* PURPOSE : Input line of text from keyboard
+* PURPOSE : To set direction of a port as input or output
 *
-* RETURN :  VALID_DATA = valid read
-*                        (see keyboard.h for the rest)
+* direction -> should be either INPUT, OUTPUT, 0, or 1 
+*             other values would cause no change in port
+* Port p -> should have one of 4 values (A, B, C, or D)
 *
-* NOTES :   Unknown characters returned as '*'
-*           Backspace is the only editing allowed.
 */
 void set_port_direction(uint8_t direction,Port p);
 
 ///////////////////////////////////set_pin_direction///////////////////////////////////
 /*
-* PURPOSE : Input line of text from keyboard
+* PURPOSE : To set direction of a pin as input or output
 *
-* RETURN :  VALID_DATA = valid read
-*                        (see keyboard.h for the rest)
+* direction -> should be either INPUT, OUTPUT, 0, or 1
+*             other values would cause no change in pin
+* Port p -> should have one of 4 values (A, B, C, or D)
+* pinNo -> should be an integer value from 0 to 7
 *
-* NOTES :   Unknown characters returned as '*'
-*           Backspace is the only editing allowed.
 */
 void set_pin_direction(uint8_t direction,Port p,uint8_t pinNo);
 
 ///////////////////////////////////set_port_output///////////////////////////////////
 /*
-* PURPOSE : Input line of text from keyboard
+/*
+* PURPOSE : To set the port as high or low
 *
-* RETURN :  VALID_DATA = valid read
-*                        (see keyboard.h for the rest)
+* direction -> should be either HIGH, LOW, 0, or 1
+*             other values would cause no change in port
+* Port p -> should have one of 4 values (A, B, C, or D)
 *
-* NOTES :   Unknown characters returned as '*'
-*           Backspace is the only editing allowed.
-*/
+* Preconditions : The function set_port_direction should be used before this one
+*           
+*/          
 void set_port_output(uint8_t direction,Port p);
 
 ///////////////////////////////////set_pin_output///////////////////////////////////
 /*
-* PURPOSE : Input line of text from keyboard
+* PURPOSE : To set the pin value as high or low
 *
-* RETURN :  VALID_DATA = valid read
-*                        (see keyboard.h for the rest)
+* direction -> should be either HIGH, LOW, 0, or 1
+*             other values would cause no change in port
+* Port p -> should have one of 4 values (A, B, C, or D)
+* pinNo -> should be an integer value from 0 to 7
 *
-* NOTES :   Unknown characters returned as '*'
-*           Backspace is the only editing allowed.
+* Preconditions : The function set_pin_direction should be used before this one
 */
 void set_pin_output(uint8_t direction,Port p,uint8_t pinNo);
 
 ///////////////////////////////////read_port///////////////////////////////////
 /*
-* PURPOSE : Input line of text from keyboard
+* PURPOSE : returns the value of the port as 1 byte (8 bits) value which if seen as
+*			binary the 1 represents a HIGH and 0 LOW	
 *
-* RETURN :  VALID_DATA = valid read
-*                        (see keyboard.h for the rest)
-*
-* NOTES :   Unknown characters returned as '*'
-*           Backspace is the only editing allowed.
+* Port p -> should have one of 4 values (A, B, C, or D).
 */
 uint8_t read_port(Port p);
 
 ///////////////////////////////////read_pin///////////////////////////////////
 /*
-* PURPOSE : Input line of text from keyboard
+* PURPOSE : returns the value of the pin as 1 (HIGH) or 0 (LOW) 
 *
-* RETURN :  VALID_DATA = valid read
-*                        (see keyboard.h for the rest)
-*
-* NOTES :   Unknown characters returned as '*'
-*           Backspace is the only editing allowed.
+* Port p -> should have one of 4 values (A, B, C, or D).
+* pinNo -> should be an integer value from 0 to 7
 */
 uint8_t read_pin(Port p,uint8_t pinNo);
 
 ///////////////////////////////////pullup_port///////////////////////////////////
 /*
-* PURPOSE : Input line of text from keyboard
-*
-* RETURN :  VALID_DATA = valid read
-*                        (see keyboard.h for the rest)
-*
-* NOTES :   Unknown characters returned as '*'
-*           Backspace is the only editing allowed.
+* PURPOSE : pulls the port up internally by setting its direction to input
+*			and making its value HIGH
+
+* Port p -> should have one of 4 values (A, B, C, or D).
 */
 void pullup_port(Port p);
 
 ///////////////////////////////////pullup_pin///////////////////////////////////
 /*
-* PURPOSE : Input line of text from keyboard
-*
-* RETURN :  VALID_DATA = valid read
-*                        (see keyboard.h for the rest)
-*
-* NOTES :   Unknown characters returned as '*'
-*           Backspace is the only editing allowed.
+* PURPOSE : pulls the pin up internally by setting its direction to input
+*			and making its value HIGH
+
+* Port p -> should have one of 4 values (A, B, C, or D).
+* pinNo -> should be an integer value from 0 to 7
 */
 void pullup_pin(Port p,uint8_t pinNo);
 
