@@ -6,6 +6,7 @@
  */
 
 #include "serviceLayer.h"
+#include "HAL.h"
 
 int main(void)
 {

@@ -10,6 +10,22 @@ Discarded input sections
  .text          0x00000000        0x0 HAL.o
  .data          0x00000000        0x0 HAL.o
  .bss           0x00000000        0x0 HAL.o
+ .text.set_port_direction
+                0x00000000       0x16 HAL.o
+ .text.set_pin_direction
+                0x00000000       0x32 HAL.o
+ .text.set_port_output
+                0x00000000       0x16 HAL.o
+ .text.set_pin_output
+                0x00000000       0x32 HAL.o
+ .text.read_port
+                0x00000000        0x6 HAL.o
+ .text.read_pin
+                0x00000000       0x26 HAL.o
+ .text.pullup_port
+                0x00000000        0xa HAL.o
+ .text.pullup_pin
+                0x00000000       0x20 HAL.o
  .comment       0x00000000       0x31 HAL.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
