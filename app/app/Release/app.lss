@@ -3,21 +3,21 @@ app.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000072  00000000  00000000  00000054  2**1
+  0 .text         0000013e  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00800060  00800060  000000c6  2**0
+  1 .data         00000000  00800060  00800060  00000192  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .comment      00000030  00000000  00000000  000000c6  2**0
+  2 .comment      00000030  00000000  00000000  00000192  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000000f8  2**2
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001c4  2**2
                   CONTENTS, READONLY
-  4 .debug_info   000004e6  00000000  00000000  00000134  2**0
+  4 .debug_info   000004e6  00000000  00000000  00000200  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_abbrev 000004a3  00000000  00000000  0000061a  2**0
+  5 .debug_abbrev 000004a3  00000000  00000000  000006e6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_line   00000115  00000000  00000000  00000abd  2**0
+  6 .debug_line   00000115  00000000  00000000  00000b89  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_str    00000196  00000000  00000000  00000bd2  2**0
+  7 .debug_str    00000196  00000000  00000000  00000c9e  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -52,17 +52,118 @@ Disassembly of section .text:
   5a:	d8 e0       	ldi	r29, 0x08	; 8
   5c:	de bf       	out	0x3e, r29	; 62
   5e:	cd bf       	out	0x3d, r28	; 61
-  60:	0e 94 36 00 	call	0x6c	; 0x6c <main>
-  64:	0c 94 37 00 	jmp	0x6e	; 0x6e <_exit>
+  60:	0e 94 73 00 	call	0xe6	; 0xe6 <main>
+  64:	0c 94 9d 00 	jmp	0x13a	; 0x13a <_exit>
 
 00000068 <__bad_interrupt>:
   68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
-0000006c <main>:
-  6c:	ff cf       	rjmp	.-2      	; 0x6c <main>
+0000006c <set_pin_direction>:
+  6c:	fb 01       	movw	r30, r22
+  6e:	81 30       	cpi	r24, 0x01	; 1
+  70:	49 f4       	brne	.+18     	; 0x84 <set_pin_direction+0x18>
+  72:	81 e0       	ldi	r24, 0x01	; 1
+  74:	90 e0       	ldi	r25, 0x00	; 0
+  76:	01 c0       	rjmp	.+2      	; 0x7a <set_pin_direction+0xe>
+  78:	88 0f       	add	r24, r24
+  7a:	4a 95       	dec	r20
+  7c:	ea f7       	brpl	.-6      	; 0x78 <set_pin_direction+0xc>
+  7e:	91 81       	ldd	r25, Z+1	; 0x01
+  80:	89 2b       	or	r24, r25
+  82:	0b c0       	rjmp	.+22     	; 0x9a <set_pin_direction+0x2e>
+  84:	81 11       	cpse	r24, r1
+  86:	0a c0       	rjmp	.+20     	; 0x9c <set_pin_direction+0x30>
+  88:	81 e0       	ldi	r24, 0x01	; 1
+  8a:	90 e0       	ldi	r25, 0x00	; 0
+  8c:	01 c0       	rjmp	.+2      	; 0x90 <set_pin_direction+0x24>
+  8e:	88 0f       	add	r24, r24
+  90:	4a 95       	dec	r20
+  92:	ea f7       	brpl	.-6      	; 0x8e <set_pin_direction+0x22>
+  94:	80 95       	com	r24
+  96:	91 81       	ldd	r25, Z+1	; 0x01
+  98:	89 23       	and	r24, r25
+  9a:	81 83       	std	Z+1, r24	; 0x01
+  9c:	08 95       	ret
 
-0000006e <_exit>:
-  6e:	f8 94       	cli
+0000009e <set_port_output>:
+  9e:	81 30       	cpi	r24, 0x01	; 1
+  a0:	21 f4       	brne	.+8      	; 0xaa <set_port_output+0xc>
+  a2:	8f ef       	ldi	r24, 0xFF	; 255
+  a4:	fb 01       	movw	r30, r22
+  a6:	82 83       	std	Z+2, r24	; 0x02
+  a8:	08 95       	ret
+  aa:	81 11       	cpse	r24, r1
+  ac:	02 c0       	rjmp	.+4      	; 0xb2 <set_port_output+0x14>
+  ae:	fb 01       	movw	r30, r22
+  b0:	12 82       	std	Z+2, r1	; 0x02
+  b2:	08 95       	ret
 
-00000070 <__stop_program>:
-  70:	ff cf       	rjmp	.-2      	; 0x70 <__stop_program>
+000000b4 <set_pin_output>:
+  b4:	fb 01       	movw	r30, r22
+  b6:	81 30       	cpi	r24, 0x01	; 1
+  b8:	49 f4       	brne	.+18     	; 0xcc <set_pin_output+0x18>
+  ba:	81 e0       	ldi	r24, 0x01	; 1
+  bc:	90 e0       	ldi	r25, 0x00	; 0
+  be:	01 c0       	rjmp	.+2      	; 0xc2 <set_pin_output+0xe>
+  c0:	88 0f       	add	r24, r24
+  c2:	4a 95       	dec	r20
+  c4:	ea f7       	brpl	.-6      	; 0xc0 <set_pin_output+0xc>
+  c6:	92 81       	ldd	r25, Z+2	; 0x02
+  c8:	89 2b       	or	r24, r25
+  ca:	0b c0       	rjmp	.+22     	; 0xe2 <set_pin_output+0x2e>
+  cc:	81 11       	cpse	r24, r1
+  ce:	0a c0       	rjmp	.+20     	; 0xe4 <set_pin_output+0x30>
+  d0:	81 e0       	ldi	r24, 0x01	; 1
+  d2:	90 e0       	ldi	r25, 0x00	; 0
+  d4:	01 c0       	rjmp	.+2      	; 0xd8 <set_pin_output+0x24>
+  d6:	88 0f       	add	r24, r24
+  d8:	4a 95       	dec	r20
+  da:	ea f7       	brpl	.-6      	; 0xd6 <set_pin_output+0x22>
+  dc:	80 95       	com	r24
+  de:	92 81       	ldd	r25, Z+2	; 0x02
+  e0:	89 23       	and	r24, r25
+  e2:	82 83       	std	Z+2, r24	; 0x02
+  e4:	08 95       	ret
+
+000000e6 <main>:
+  e6:	44 e0       	ldi	r20, 0x04	; 4
+  e8:	60 e3       	ldi	r22, 0x30	; 48
+  ea:	70 e0       	ldi	r23, 0x00	; 0
+  ec:	81 e0       	ldi	r24, 0x01	; 1
+  ee:	0e 94 36 00 	call	0x6c	; 0x6c <set_pin_direction>
+  f2:	45 e0       	ldi	r20, 0x05	; 5
+  f4:	60 e3       	ldi	r22, 0x30	; 48
+  f6:	70 e0       	ldi	r23, 0x00	; 0
+  f8:	81 e0       	ldi	r24, 0x01	; 1
+  fa:	0e 94 36 00 	call	0x6c	; 0x6c <set_pin_direction>
+  fe:	46 e0       	ldi	r20, 0x06	; 6
+ 100:	60 e3       	ldi	r22, 0x30	; 48
+ 102:	70 e0       	ldi	r23, 0x00	; 0
+ 104:	81 e0       	ldi	r24, 0x01	; 1
+ 106:	0e 94 36 00 	call	0x6c	; 0x6c <set_pin_direction>
+ 10a:	47 e0       	ldi	r20, 0x07	; 7
+ 10c:	60 e3       	ldi	r22, 0x30	; 48
+ 10e:	70 e0       	ldi	r23, 0x00	; 0
+ 110:	81 e0       	ldi	r24, 0x01	; 1
+ 112:	0e 94 36 00 	call	0x6c	; 0x6c <set_pin_direction>
+ 116:	60 e3       	ldi	r22, 0x30	; 48
+ 118:	70 e0       	ldi	r23, 0x00	; 0
+ 11a:	81 e0       	ldi	r24, 0x01	; 1
+ 11c:	0e 94 4f 00 	call	0x9e	; 0x9e <set_port_output>
+ 120:	46 e0       	ldi	r20, 0x06	; 6
+ 122:	60 e3       	ldi	r22, 0x30	; 48
+ 124:	70 e0       	ldi	r23, 0x00	; 0
+ 126:	80 e0       	ldi	r24, 0x00	; 0
+ 128:	0e 94 5a 00 	call	0xb4	; 0xb4 <set_pin_output>
+ 12c:	47 e0       	ldi	r20, 0x07	; 7
+ 12e:	60 e3       	ldi	r22, 0x30	; 48
+ 130:	70 e0       	ldi	r23, 0x00	; 0
+ 132:	80 e0       	ldi	r24, 0x00	; 0
+ 134:	0e 94 5a 00 	call	0xb4	; 0xb4 <set_pin_output>
+ 138:	ee cf       	rjmp	.-36     	; 0x116 <main+0x30>
+
+0000013a <_exit>:
+ 13a:	f8 94       	cli
+
+0000013c <__stop_program>:
+ 13c:	ff cf       	rjmp	.-2      	; 0x13c <__stop_program>

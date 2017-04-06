@@ -1,10 +1,12 @@
 #ifndef HAL_H_
 #define HAL_H_
+
+typedef struct portStruct* Port;
  
 #define A 0x39
 #define B 0x36
 #define C 0x33
-#define D 0x30
+#define D (Port)0x30
 
 #define HIGH 1
 #define LOW 0
@@ -12,7 +14,6 @@
 #define OUTPUT 1
 #define INPUT 0
 
-typedef struct portStruct* Port;
 
 ///////////////////////////////////set_port_direction///////////////////////////////////
 /*
